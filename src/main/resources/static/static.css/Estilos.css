@@ -31,18 +31,18 @@
 }
 #barraLateral {
     position: absolute;
-    top: 12%;
+    top: 8%;
     left: 0;
-    height: 81%;
+    height: 85%;
     width: 20%;
     background-color: #8e27f6;
     color: black;
 }
 #contenido {
     position: absolute;
-    top: 12%;
+    top: 8%;
     left: 20%;
-    height: 81%;
+    height: 85%;
     width: 80%;
     background-color: #24a1df;
     color: black;
