@@ -2,6 +2,7 @@ package com.tienda.controller;
 
 import com.tienda.domain.Articulo;
 import com.tienda.service.ArticuloService;
+import com.tienda.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ public class ArticuloController {
     @Autowired
     private ArticuloService articuloService;
     
+    @Autowired
+    private CategoriaService categoriaService;
+    
     @GetMapping("/articulo/listado")
     public String Inicio(Model model){
         var articulos = articuloService.getArticulos(false);
@@ -26,7 +30,9 @@ public class ArticuloController {
     }
     
     @GetMapping("/articulo/nuevo")
-    public String nuevoArticulo(Articulo articulo){
+    public String nuevoArticulo(Articulo articulo, Model model){
+        var categorias = categoriaService.getCategorias(true);
+        model.addAttribute("categorias", categorias);
         return "/articulo/modificar";
     }
     
@@ -40,6 +46,8 @@ public class ArticuloController {
     public String modificarArticulo(Articulo articulo, Model model){
         articulo = articuloService.getArticulo(articulo);
         model.addAttribute("articulo", articulo);
+        var categorias = categoriaService.getCategorias(false);
+        model.addAttribute("categorias", categorias);
         return "/articulo/modificar";
     }
     
