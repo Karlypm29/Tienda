@@ -36,6 +36,7 @@ public class Cliente implements Serializable{
     @JoinColumn(name="id_credito", referencedColumnName = "id_credito")
     @ManyToOne
     private Credito credito;
+    
     public Cliente() {
     }
 

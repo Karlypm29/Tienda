@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.tienda;
 
+import com.tienda.service.UsuarioDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,26 +14,29 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  */
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
-  
-    //El siguiente metodo funciona para hcer la auteticaciòn del usuario
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    
+    @Autowired
+    UsuarioDetailsServiceImpl userDetailsService;
+    
+    //El siguiente método funciona para hacer la autenticación del usuario
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password("{noop}123")
-                .roles("ADMIN", "VENDEDOR", "USER")
-                .and()
-                .withUser("vendedor")
-                .password("{noop}123")
-                .roles("VENDEDOR", "USER")
-                .and()
-                .withUser("user")
-                .password("{noop}123")
-                .roles("USER");
+//        auth.inMemoryAuthentication()
+//                .withUser("admin")
+//                    .password("{noop}123")
+//                    .roles("ADMIN", "VENDEDOR", "USER")
+//                .and()
+//                .withUser("vendedor")
+//                    .password("{noop}123")
+//                    .roles("VENDEDOR", "USER")
+//                .and()
+//                .withUser("user")
+//                    .password("{noop}123")
+//                    .roles("USER");
+        auth.userDetailsService(userDetailsService);
     }
-    
-    //Definir la configuración de accesos    
+    //Definir la configuración de accesos
     @Override
     protected void configure(HttpSecurity http)throws Exception {
         http.authorizeRequests()
@@ -59,5 +60,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                     .exceptionHandling().accessDeniedPage("/errores/403");
     }
-        
 }
